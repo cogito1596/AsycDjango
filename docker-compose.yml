@@ -33,5 +33,20 @@ services:
       - .env
     depends_on:
       - redis
+      - django
+
+  celery2:
+    container_name: celery2
+    build: 
+      context: ./celeryworker
+      dockerfile: Dockerfile
+    command: celery -A celeryworker worker --loglevel=info
+    volumes:
+      - ./celeryworker:/usr/src/app
+    environment:
+      - .env
+    depends_on:
+      - redis
+      - django
 
   
